@@ -1,0 +1,56 @@
+<div class="loading" *ngIf="!posts">
+  <p>Cargando....</p>
+</div>
+<div *ngIf="posts" class="container-fluid mt-3">
+  <div class="flex flex-justify">
+    <h5 class="text-center">Listado de nuestros posts</h5>
+    <div class="flex">
+      <input class="input" type="text" name="find" #title="ngModel" [(ngModel)]="find" required pattern="[a-zA-Z ]+">
+      <button class="btn btn-info button" (click)="search()">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </div>
+  <div class="card-columns" style="margin-top: 10px;">
+    <span *ngFor="let post of posts">
+      <div class="card w-100 fr-box">
+        <div class="card-header mt-2">
+          <h6><a [routerLink]="['/post-detalle',post.id]">{{post.title}}</a></h6>
+        </div>
+        <div class="card-body">
+          <div class="post-image w-100">
+            <img src="{{url+'post/getimage/'+post.image}}" alt="Image not found" class="w-100">
+          </div>
+          <div class="post-buttons mt-2">
+            <a class="btn btn-info mr-2" [routerLink]="['/post-detalle',post.id]">Leer</a>
+            <span *ngIf="identity && identity.iss==post.user_id">
+              <a class="btn btn-warning mr-2" [routerLink]="['/editar-post',post.id]">Editar</a>
+              <button type="button" class="btn btn-danger mr-2" data-toggle="modal"
+                data-target="#deleteModal">Borrar</button>
+              <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true"
+                aria-labelledby="modalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h6 class="modal-title" id="modalLabel">Confirmar borrado</h6>
+                      <button class="close" type="button" data-dismiss="modal"
+                        aria-label="Close"><span>&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Esta seguro que desea borrar el registro?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-danger" type="button" (click)="delete(post.id)"
+                        data-dismiss="modal">Eliminar</button>
+                      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>

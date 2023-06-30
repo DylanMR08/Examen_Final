@@ -1,0 +1,31 @@
+<table style="width: 90%;" class="table table-responsive-lg m-lg-auto" >
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Correo electronico</th>
+        <th>Role</th>
+        <th>Accion</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let u of users">
+            <td>{{u.id}}</td>
+            <td>{{u.name}}</td>
+            <td>{{u.last_name}}</td>
+            <td>{{u.email}}</td>
+            <td> <ng-container *ngIf="u.role=='user_role'; else elseTemplate">
+              Usuario  
+            </ng-container>
+            <ng-template #elseTemplate>
+                Administrador
+            </ng-template>
+            </td>
+            <td>
+                <button class="btn btn-info"><i class="fas fa-edit">
+                </i></button> <button class="btn btn-danger ml-2"><i class="fas fa-trash-alt"></i></button>
+            </td>
+        </tr>        
+    </tbody>
+</table>
